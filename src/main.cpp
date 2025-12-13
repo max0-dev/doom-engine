@@ -3,6 +3,8 @@
 #include<GLFW/glfw3.h>
 
 #include "include/Shader.h"
+#include "include/VertexBuffer.h"
+#include "include/VertexArray.h"
 
 void GLAPIENTRY MessageCallback(
     GLenum source,
@@ -79,32 +81,26 @@ int main(int, char**){
     Shader basic("../../res/shaders/vert.vs", "../../res/shaders/frag.fs");
 
     float vertices[] = {
-        -0.5f, -0.5f, 0,
-         0.5f, -0.5f, 0,
-         0,     0.5f, 0,
+        -0.5f, -0.5f, 0, 1, 0, 0,
+         0.5f, -0.5f, 0, 0, 1, 0,
+         0,     0.5f, 0, 0, 0, 1
     };
 
-    unsigned int vbo;
+    VertexBuffer vbo;
+    vbo.BufferData(sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    unsigned int vao;
+    VertexArray vao;
+    vao.GetLayout().Push<float>(3);
+    vao.GetLayout().Push<float>(3);
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    
-
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 3, (void*)0);
-    glEnableVertexAttribArray(0);
+    vao.AddBuffer(vbo);
 
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
         basic.Use();
-        glBindVertexArray(vao);
+        vao.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);    
 
         glfwSwapBuffers(window);
