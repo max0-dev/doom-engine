@@ -1,0 +1,32 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a88aad4b3a3a48c83277a42b119512f361a551c9dae20b46711ad38543ca335b
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e6dbbceeef368bb823e69fc4cf25511048efc005295da2516ddac90fe07ac877
+Status: install ok installed
+
+Package: fmt
+Version: 12.1.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cc8100bffb171b71feade58e54642c9d63fb63b3e56f40af9de6d28bab6027f3
+Description: {fmt} is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostreams.
+Status: install ok installed
+
+Package: spdlog
+Version: 1.16.0
+Depends: fmt, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7baa84520eb509caba7fe30d2ef699bae77faccaa9f8ed6edbe31626aaa07788
+Description: Very fast, header-only/compiled, C++ logging library.
+Status: install ok installed
+

@@ -1,0 +1,9 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "description": "A basic C++ project template using vcpkg",
+  "dependencies": [
+    "fmt",
+    "spdlog"
+  ]
+}
