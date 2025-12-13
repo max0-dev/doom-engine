@@ -5,5 +5,6 @@ private:
     unsigned int mHandle;
 public:
     Shader(const char* vertexpath, const char* fragmentpath);
-    
+    ~Shader();
+    void Use();
 };

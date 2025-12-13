@@ -94,3 +94,11 @@ Shader::Shader(const char* vertexpath, const char* fragmentpath){
     glDetachShader(mHandle, fragment);
     glDeleteShader(fragment);
 }
+
+Shader::~Shader(){
+    glDeleteProgram(mHandle);
+}
+
+void Shader::Use(){
+    glUseProgram(mHandle);
+}
