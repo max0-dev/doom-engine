@@ -22,3 +22,6 @@ add_executable(DoomEngine src/main.cpp)
 
 # Link libraries
 target_link_libraries(DoomEngine PRIVATE fmt::fmt spdlog::spdlog glfw GLEW::GLEW)
+
+target_include_directories(DoomEngine PRIVATE src/include)
+target_sources(DoomEngine PRIVATE src/Shader.cpp)
