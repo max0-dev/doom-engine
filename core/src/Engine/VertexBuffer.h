@@ -1,5 +1,5 @@
 #pragma once
-#include<gl/glew.h>
+#include"extern.h"
 
 class VertexBuffer{
 private:

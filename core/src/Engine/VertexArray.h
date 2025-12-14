@@ -1,5 +1,5 @@
 #pragma once
-#include<gl/glew.h>
+#include"extern.h"
 #include<vector>
 #include"VertexBuffer.h"
 
