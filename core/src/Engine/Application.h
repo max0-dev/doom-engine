@@ -1,13 +1,20 @@
 #pragma once
 #include"Window.h"
 #include"Layer.h"
+#include<memory>
+#include<vector>
+
 class Application{
 private:
-    std::unique_ptr<Window> mWindow;
-    std::vector<Layer> mLayerStack;
-    bool mShouldClose;
+    Window mWindow;
+    std::vector<std::unique_ptr<Layer>> mLayerStack;
 public:
     Application(WindowSpecs window_specs);
     ~Application();
     void Run();
+    template<typename T>
+    requires(std::is_base_of_v<Layer, T>)
+    void PushLayer(){
+        mLayerStack.push_back(std::make_unique<T>());
+    }
 };

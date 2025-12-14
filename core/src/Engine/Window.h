@@ -19,4 +19,5 @@ public:
 
     void SwapBuffers();
     inline double GetTime() { return glfwGetTime(); }
+    inline bool ShouldClose() { return glfwWindowShouldClose(mWindow); }
 };

@@ -15,6 +15,8 @@ Window::Window(WindowSpecs specs){
     }
 
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    glfwWindowHint(GL_MAJOR_VERSION, 3);
+    glfwWindowHint(GL_MINOR_VERSION, 3);
 
     glfwMakeContextCurrent(mWindow);
 
@@ -22,6 +24,17 @@ Window::Window(WindowSpecs specs){
     
     //glEnable(GL_DEBUG_OUTPUT);
     //glDebugMessageCallback(MessageCallback, 0);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 }
 
 Window::~Window(){
