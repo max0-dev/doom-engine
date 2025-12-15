@@ -4,13 +4,13 @@
 #include<Engine/Application.h>
 #include<iostream>
 
-DemoLayer::DemoLayer(){
+DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     shader = std::make_unique<Shader>("../../../res/shaders/vert.vs", "../../../res/shaders/frag.fs");
     float vertices[] = {
-        -0.5f, -0.5f, 0, 1, 0, 0,
-         0.5f, -0.5f, 0, 0, 1, 0,
-         0.5f,  0.5f, 0, 0, 0, 1,
-        -0.5f,  0.5f, 0, 0, 0, 1
+        -5, -5, 0, 1, 0, 0,
+         5, -5, 0, 0, 1, 0,
+         5,  5, 0, 0, 0, 1,
+        -5,  5, 0, 0, 0, 1
     };
 
     unsigned int indices[] = {
@@ -42,6 +42,8 @@ void DemoLayer::OnUpdate(double dt){
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+    camera.Look(dt);
+    camera.Move(dt);
 }
 
 void DemoLayer::OnRender(){
@@ -49,8 +51,8 @@ void DemoLayer::OnRender(){
     
     auto& window = Application::sApplication->GetWindow();
     glm::mat4 model = glm::rotate(glm::identity<glm::mat4>(), (float)window.GetTime(), glm::vec3(0, 1.0f, 0));
-    glm::mat4 view = glm::translate(glm::identity<glm::mat4>(), glm::vec3(0, 0, -2));
-    glm::mat4 proj = glm::perspective(glm::radians(90.0f), window.GetSpecs().GetAspect(), 0.1f, 100.0f);
+    glm::mat4 view = camera.GetView();
+    glm::mat4 proj = camera.GetProjection(window.GetSpecs().GetAspect());
 
     shader->SetUniformMat4("model", model);
     shader->SetUniformMat4("view", view);

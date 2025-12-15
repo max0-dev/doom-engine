@@ -5,6 +5,7 @@
 #include<Engine/IndexBuffer.h>
 #include<Engine/Shader.h>
 #include<Engine/Event.h>
+#include<Engine/FreeLookCamera.h>
 #include<Engine/extern.h>
 #include<memory>
 
@@ -13,6 +14,8 @@ private:
     VertexBuffer vbo;
     VertexArray vao;
     IndexBuffer ibo;
+
+    FreeLookCamera camera;
 
     std::unique_ptr<Shader> shader;
 public:

@@ -10,6 +10,7 @@ add_library(Engine STATIC
     src/Application.cpp
     src/Shader.cpp
     src/Window.cpp
+    src/FreeLookCamera.cpp
 )
 
 # Include headers
