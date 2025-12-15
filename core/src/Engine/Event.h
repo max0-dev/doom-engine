@@ -2,6 +2,7 @@
 #include<Engine/extern.h>
 #include<string>
 #include<functional>
+#include<sstream>
 
 #define EVENT_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
                          virtual EventType GetEventType() const override { return GetStaticType(); }
@@ -9,12 +10,9 @@
 
 enum class EventType{
     None,
-    MouseButtonDown,
-    MouseButtonUp,
-    MouseButtonHold,
-    KeyDown,
-    KeyUp,
-    KeyRepeat
+    MouseButtonDown,MouseButtonUp,MouseButtonHold,
+    KeyDown,KeyUp,KeyRepeat,
+    WindowResize
 };
 
 class Event{
@@ -97,4 +95,19 @@ public:
     }
     inline GLenum GetKey() const { return mKey; }
     EVENT_TYPE(KeyRepeat)
+};
+
+class WindowResize : public Event{
+private:
+    int mWidth;
+    int mHeight;
+public:
+    WindowResize(int width, int height): mWidth(width), mHeight(height) {}
+    std::string ToString(){
+        std::stringstream ss;
+        ss << "Window resized to " << mWidth << " x " << mHeight;
+        return ss.str();
+    }
+    inline std::tuple<int, int> GetDimensions() const {return std::tuple<int, int>(mWidth, mHeight);}
+    EVENT_TYPE(WindowResize)
 };

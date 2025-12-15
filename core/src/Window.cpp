@@ -20,6 +20,8 @@ Window::Window(WindowSpecs specs){
 
     glfwMakeContextCurrent(mWindow);
 
+    glfwSwapInterval(specs.vsync ? 1 : 0);
+
     glewInit();  
     
     //glEnable(GL_DEBUG_OUTPUT);
@@ -56,6 +58,15 @@ Window::Window(WindowSpecs specs){
             KeyRepeat event(key);
             window->mEventCallback(event);
         }
+    });
+
+    glfwSetFramebufferSizeCallback(mWindow, [](GLFWwindow* handle, int width, int height){
+        Window* window = (Window*)glfwGetWindowUserPointer(handle);
+
+        WindowResize event(width, height);
+        window->mEventCallback(event);
+
+        glViewport(0, 0, width, height);
     });
 
     IMGUI_CHECKVERSION();
