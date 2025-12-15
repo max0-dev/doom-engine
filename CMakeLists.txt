@@ -14,3 +14,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(core)
 add_subdirectory(vendor/imgui)
 add_subdirectory(demo)
+
+function(set_output_dirs target)
+    set_target_properties(${target} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out/bin
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out/lib
+        ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out/lib
+    )
+endfunction()
+
+set_output_dirs(Engine)
+set_output_dirs(Demo)

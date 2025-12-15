@@ -1,10 +1,17 @@
 #include"Engine/Application.h"
 #include<memory>
 #include<vector>
+#include<ranges>
 
 Application::Application(WindowSpecs window_specs) : mWindow(window_specs){
-
-    
+    mWindow.mEventCallback = [this](Event& event){
+        Raise(event);
+    };
+}
+void Application::Raise(Event& event){
+    for(auto& layer : std::views::reverse(mLayerStack)){
+        layer->OnEvent(event);
+    }
 }
 Application::~Application(){
 

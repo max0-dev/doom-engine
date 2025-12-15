@@ -1,6 +1,7 @@
 #pragma once
 #include"extern.h"
 #include<spdlog/spdlog.h>
+#include<Engine/Event.h>
 
 struct WindowSpecs{
     int width;
@@ -20,4 +21,6 @@ public:
     void SwapBuffers();
     inline double GetTime() { return glfwGetTime(); }
     inline bool ShouldClose() { return glfwWindowShouldClose(mWindow); }
+    
+    std::function<void(Event&)> mEventCallback;
 };

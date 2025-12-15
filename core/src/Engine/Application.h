@@ -12,6 +12,8 @@ public:
     Application(WindowSpecs window_specs);
     ~Application();
     void Run();
+    void Raise(Event& event);
+    
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)
     void PushLayer(){

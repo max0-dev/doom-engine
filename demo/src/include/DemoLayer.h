@@ -3,6 +3,7 @@
 #include<Engine/VertexBuffer.h>
 #include<Engine/VertexArray.h>
 #include<Engine/Shader.h>
+#include<Engine/Event.h>
 #include<memory>
 
 class DemoLayer : public Layer{
@@ -14,4 +15,5 @@ public:
     DemoLayer();
     void OnUpdate(double dt) override;
     void OnRender() override;
+    void OnEvent(Event& event) override;
 };

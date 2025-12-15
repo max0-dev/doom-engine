@@ -25,6 +25,39 @@ Window::Window(WindowSpecs specs){
     //glEnable(GL_DEBUG_OUTPUT);
     //glDebugMessageCallback(MessageCallback, 0);
 
+    glfwSetWindowUserPointer(mWindow, this);
+
+    glfwSetMouseButtonCallback(mWindow, [](GLFWwindow* handle, int button, int action, int mods){
+        Window* window = (Window*)glfwGetWindowUserPointer(handle);
+
+        if(action == GLFW_PRESS){
+            MouseButtonDown event(button);
+            window->mEventCallback(event);
+        }
+        else if(action == GLFW_RELEASE){
+            MouseButtonUp event(button);
+            window->mEventCallback(event);
+        }
+        
+    });
+
+    glfwSetKeyCallback(mWindow, [](GLFWwindow* handle, int key, int scancode, int action, int mods){
+        Window* window = (Window*)glfwGetWindowUserPointer(handle);
+
+        if(action == GLFW_PRESS){
+            KeyDown event(key);
+            window->mEventCallback(event);
+        }
+        else if(action == GLFW_RELEASE){
+            KeyUp event(key);
+            window->mEventCallback(event);
+        }
+        else if(action == GLFW_REPEAT){
+            KeyRepeat event(key);
+            window->mEventCallback(event);
+        }
+    });
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -35,6 +68,8 @@ Window::Window(WindowSpecs specs){
 
     ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
     ImGui_ImplOpenGL3_Init("#version 330");
+
+    
 }
 
 Window::~Window(){
