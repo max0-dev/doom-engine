@@ -67,6 +67,8 @@ Window::Window(WindowSpecs specs) : mSpecs(specs){
         window->mEventCallback(event);
 
         glViewport(0, 0, width, height);
+        window->GetSpecs().width = width;
+        window->GetSpecs().height = height;
     });
 }
 

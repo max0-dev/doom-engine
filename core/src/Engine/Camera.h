@@ -25,4 +25,5 @@ public:
     inline glm::mat4 GetView(){
         return glm::lookAt(mTransform.position, mTransform.position + mTransform.front, mTransform.up);
     }
+    inline const CameraTransform& GetCameraTransform() const { return mTransform; }
 };

@@ -2,6 +2,8 @@
 #include<Engine/extern.h>
 #include<spdlog/spdlog.h>
 #include<Engine/Application.h>
+#include<Engine/Scene.h>
+#include<Engine/Renderer.h>
 #include<iostream>
 
 DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
@@ -25,6 +27,10 @@ DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
 
     vao.AddBuffer(vbo);
     auto& window = Application::sApplication->GetWindow();
+
+    Scene* scene = new Scene();
+    scene->SetActiveCamera(&camera);
+    Renderer::Instance()->SetActiveScene(scene);
 }
 
 void DemoLayer::OnUpdate(double dt){
@@ -53,10 +59,12 @@ void DemoLayer::OnEvent(Event& event){
     EventDispatcher dispatcher(event);
     static bool focused = false;
     dispatcher.Dispatch<KeyDown>([](KeyDown& e){
+        auto window = Application::sApplication->GetWindow().GetRawPtr();
         if(e.GetKey() == GLFW_KEY_F){
             focused = !focused;
-            auto window = Application::sApplication->GetWindow().GetRawPtr();
             glfwSetInputMode(window, GLFW_CURSOR, focused ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+        }else if(e.GetKey() == GLFW_KEY_ESCAPE){
+            glfwSetWindowShouldClose(window, GL_TRUE);
         }
         return true;
     });

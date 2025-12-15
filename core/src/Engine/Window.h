@@ -28,6 +28,6 @@ public:
     inline void GetMousePos(double* xpos, double* ypos) { return glfwGetCursorPos(mWindow, xpos, ypos); }
     inline bool IsKeyDown(int key) { return glfwGetKey(mWindow, key) == GLFW_PRESS ? true : false; }
     inline GLFWwindow* GetRawPtr() { return mWindow; }
-    inline const WindowSpecs& GetSpecs() const { return mSpecs; }
+    inline WindowSpecs& GetSpecs() { return mSpecs; }
     std::function<void(Event&)> mEventCallback;
 };
