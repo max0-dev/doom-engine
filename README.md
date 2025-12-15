@@ -1,5 +1,5 @@
 ## Requirements ##
--vcpkg installed
+-vcpkg
 -cmake
 -Ninja
 -C++20
