@@ -21,6 +21,8 @@ void FreeLookCamera::Look(double dt){
 
     mRotZ += deltax * mSens * dt;
     mRotY -= deltay * mSens * dt;
+    mRotY = glm::clamp(mRotY, -90.0, 90.0);
+    
     double sinz = sin(glm::radians(mRotZ));
     double cosz = cos(glm::radians(mRotZ));
 

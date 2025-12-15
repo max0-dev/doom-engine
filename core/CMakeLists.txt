@@ -5,12 +5,14 @@ project(Engine VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+file(GLOB_RECURSE ENGINE_SOURCES 
+    CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+)
+
 # Static library
 add_library(Engine STATIC 
-    src/Application.cpp
-    src/Shader.cpp
-    src/Window.cpp
-    src/FreeLookCamera.cpp
+    ${ENGINE_SOURCES}
 )
 
 # Include headers

@@ -13,7 +13,7 @@ Application::Application(WindowSpecs window_specs) : mWindow(window_specs){
 }
 void Application::Raise(Event& event){
     for(auto& layer : std::views::reverse(mLayerStack)){
-        layer->OnEvent(event);
+        layer->OnEvent(event);  
     }
 }
 Application::~Application(){
@@ -31,8 +31,10 @@ void Application::Run(){
         glfwPollEvents();
 
         for(std::unique_ptr<Layer>& layer : mLayerStack){
-            layer->OnUpdate(delta_t);
-            layer->OnRender();
+            if(layer->IsActive()){
+                layer->OnUpdate(delta_t);
+                layer->OnRender();
+            }
         }
 
         mWindow.SwapBuffers();

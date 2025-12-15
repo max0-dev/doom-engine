@@ -28,20 +28,6 @@ DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
 }
 
 void DemoLayer::OnUpdate(double dt){
-    
-    static glm::vec3 pos(0);
-    
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-    ImGui::Begin("Debug Window");
-    ImGui::SliderFloat3("Model", glm::value_ptr(pos), -10, 10);
-    ImGui::End();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
     camera.Look(dt);
     camera.Move(dt);
 }
