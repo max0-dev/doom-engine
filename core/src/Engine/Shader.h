@@ -1,4 +1,5 @@
 #pragma once
+#include<Engine/extern.h>
 
 class Shader{
 private:
@@ -7,4 +8,5 @@ public:
     Shader(const char* vertexpath, const char* fragmentpath);
     ~Shader();
     void Use();
+    void SetUniformMat4(const char* name ,const glm::mat4& value);
 };

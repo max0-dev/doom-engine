@@ -13,6 +13,8 @@ public:
     ~Application();
     void Run();
     void Raise(Event& event);
+    inline Window& GetWindow() { return mWindow; }
+    static Application* sApplication;
     
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)

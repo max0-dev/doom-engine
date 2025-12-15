@@ -1,7 +1,7 @@
 #include"Engine/Window.h"
 #include"Engine/extern.h"
 
-Window::Window(WindowSpecs specs){
+Window::Window(WindowSpecs specs) : mSpecs(specs){
     if(!glfwInit()){
         spdlog::error("Failed to initialize GLFW");
         return;

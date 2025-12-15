@@ -1,6 +1,7 @@
 #include "include/DemoLayer.h"
 #include<Engine/extern.h>
 #include<spdlog/spdlog.h>
+#include<Engine/Application.h>
 #include<iostream>
 
 DemoLayer::DemoLayer(){
@@ -23,25 +24,38 @@ DemoLayer::DemoLayer(){
     vao.GetLayout().Push<float>(3);
 
     vao.AddBuffer(vbo);
+    auto& window = Application::sApplication->GetWindow();
 }
 
 void DemoLayer::OnUpdate(double dt){
-
+    
+    static glm::vec3 pos(0);
+    
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
     ImGui::Begin("Debug Window");
-
-    ImGui::Text("------");
+    ImGui::SliderFloat3("Model", glm::value_ptr(pos), -10, 10);
     ImGui::End();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 }
 
 void DemoLayer::OnRender(){
     shader->Use();
+    
+    auto& window = Application::sApplication->GetWindow();
+    glm::mat4 model = glm::rotate(glm::identity<glm::mat4>(), (float)window.GetTime(), glm::vec3(0, 1.0f, 0));
+    glm::mat4 view = glm::translate(glm::identity<glm::mat4>(), glm::vec3(0, 0, -2));
+    glm::mat4 proj = glm::perspective(glm::radians(90.0f), window.GetSpecs().GetAspect(), 0.1f, 100.0f);
+
+    shader->SetUniformMat4("model", model);
+    shader->SetUniformMat4("view", view);
+    shader->SetUniformMat4("proj", proj);
+   
     vao.Bind();
     ibo.Bind();
     glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, NULL);
@@ -49,17 +63,13 @@ void DemoLayer::OnRender(){
 
 void DemoLayer::OnEvent(Event& event){
     EventDispatcher dispatcher(event);
-
+    static bool focused = false;
     dispatcher.Dispatch<KeyDown>([](KeyDown& e){
-        spdlog::info(e.ToString());
-        return true;
-    });
-    dispatcher.Dispatch<KeyUp>([](KeyUp& e){
-        spdlog::info(e.ToString());
-        return true;
-    });
-    dispatcher.Dispatch<KeyRepeat>([](KeyRepeat& e){
-        spdlog::info(e.ToString());
+        if(e.GetKey() == GLFW_KEY_F){
+            focused = !focused;
+            auto window = Application::sApplication->GetWindow().GetRawPtr();
+            glfwSetInputMode(window, GLFW_CURSOR, focused ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+        }
         return true;
     });
 }

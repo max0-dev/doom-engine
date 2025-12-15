@@ -5,6 +5,7 @@
   "dependencies": [
     "spdlog",
     "glfw3",
-    "glew"
+    "glew",
+    "glm"
   ]
 }

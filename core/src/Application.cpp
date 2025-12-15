@@ -3,10 +3,13 @@
 #include<vector>
 #include<ranges>
 
+Application* Application::sApplication = nullptr;
+
 Application::Application(WindowSpecs window_specs) : mWindow(window_specs){
     mWindow.mEventCallback = [this](Event& event){
         Raise(event);
     };
+    sApplication = this;
 }
 void Application::Raise(Event& event){
     for(auto& layer : std::views::reverse(mLayerStack)){
@@ -34,4 +37,5 @@ void Application::Run(){
 
         mWindow.SwapBuffers();
     }
+    
 }

@@ -15,10 +15,16 @@ add_library(Engine STATIC
 # Include headers
 target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+target_precompile_headers(Engine PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Engine/std_common.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Engine/extern.h
+)
+
 # Find dependencies
 find_package(spdlog CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 # Link dependencies
 target_link_libraries(Engine PUBLIC
@@ -26,4 +32,5 @@ target_link_libraries(Engine PUBLIC
     glfw
     GLEW::GLEW
     imgui
+    glm::glm
 )
