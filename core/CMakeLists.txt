@@ -16,11 +16,11 @@ add_library(Engine STATIC
 )
 
 # Include headers
-target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/include)
 
 target_precompile_headers(Engine PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Engine/std_common.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Engine/extern.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/std_common.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/extern.h
 )
 
 # Find dependencies
@@ -36,4 +36,5 @@ target_link_libraries(Engine PUBLIC
     GLEW::GLEW
     imgui
     glm::glm
+    assimp
 )

@@ -1,9 +1,9 @@
-#include<Engine/DebugOverlay.h>
-#include<Engine/extern.h>
-#include<Engine/Event.h>
-#include<Engine/Scene.h>
-#include<Engine/Renderer.h>
-#include<Engine/Camera.h>
+#include<DebugOverlay.h>
+#include<extern.h>
+#include<Event.h>
+#include<Scene/Scene.h>
+#include<Rendering/Renderer.h>
+#include<Scene/Camera.h>
 
 void DebugOverlay::OnRender(){
     Begin("Debug");

@@ -1,10 +1,8 @@
 #include "include/DemoLayer.h"
-#include<Engine/extern.h>
 #include<spdlog/spdlog.h>
-#include<Engine/Application.h>
-#include<Engine/Scene.h>
-#include<Engine/Renderer.h>
 #include<iostream>
+
+#include<Engine.h>
 
 DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     shader = std::make_unique<Shader>("../../../res/shaders/vert.vs", "../../../res/shaders/frag.fs");

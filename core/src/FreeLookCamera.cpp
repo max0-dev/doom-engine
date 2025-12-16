@@ -1,5 +1,5 @@
-#include<Engine/FreeLookCamera.h>
-#include<Engine/extern.h>
+#include<Scene/FreeLookCamera.h>
+#include<extern.h>
 
 void FreeLookCamera::Look(double dt){
     Window& window = Application::sApplication->GetWindow();
@@ -7,6 +7,10 @@ void FreeLookCamera::Look(double dt){
     double mousex, mousey;
     window.GetMousePos(&mousex, &mousey);
 
+    if(glfwGetInputMode(window.GetRawPtr(), GLFW_CURSOR) == GLFW_CURSOR_NORMAL){
+        first = true;
+        return;
+    }
     if(first){
         first = false;
         lastx = mousex;

@@ -1,12 +1,5 @@
 #pragma once
-#include<Engine/Layer.h>
-#include<Engine/VertexBuffer.h>
-#include<Engine/VertexArray.h>
-#include<Engine/IndexBuffer.h>
-#include<Engine/Shader.h>
-#include<Engine/Event.h>
-#include<Engine/FreeLookCamera.h>
-#include<Engine/extern.h>
+#include<Engine.h>
 #include<memory>
 
 class DemoLayer : public Layer{

@@ -1,11 +1,11 @@
-#include "Engine/Shader.h"
+#include "Rendering/Shader.h"
 #include<spdlog/spdlog.h>
 
 #include<fstream>
 #include<string>
 #include<sstream>
 
-#include"Engine/extern.h"
+#include"extern.h"
 
 Shader::Shader(const char* vertexpath, const char* fragmentpath){
     std::string sVertex;

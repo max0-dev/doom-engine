@@ -1,5 +1,5 @@
-#include"Engine/Window.h"
-#include"Engine/extern.h"
+#include"Windowing/Window.h"
+#include"extern.h"
 
 Window::Window(WindowSpecs specs) : mSpecs(specs){
     if(!glfwInit()){
