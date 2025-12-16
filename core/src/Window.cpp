@@ -1,6 +1,16 @@
 #include"Windowing/Window.h"
 #include"extern.h"
 
+void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam){
+    switch (severity)
+    {
+        //case GL_DEBUG_SEVERITY_NOTIFICATION: spdlog::info("[OPENGL]" + std::string(message)); break;
+        case GL_DEBUG_SEVERITY_LOW: spdlog::warn("[OPENGL]" + std::string(message)); break;
+        case GL_DEBUG_SEVERITY_MEDIUM: spdlog::error("[OPENGL]" + std::string(message)); break;
+        case GL_DEBUG_SEVERITY_HIGH: spdlog::critical("[OPENGL]" + std::string(message)); break;
+    }
+}
+
 Window::Window(WindowSpecs specs) : mSpecs(specs){
     if(!glfwInit()){
         spdlog::error("Failed to initialize GLFW");
@@ -22,10 +32,7 @@ Window::Window(WindowSpecs specs) : mSpecs(specs){
 
     glfwSwapInterval(specs.vsync ? 1 : 0);
 
-    glewInit();  
-    
-    //glEnable(GL_DEBUG_OUTPUT);
-    //glDebugMessageCallback(MessageCallback, 0);
+    glewInit();
 
     glfwSetWindowUserPointer(mWindow, this);
 
@@ -70,6 +77,9 @@ Window::Window(WindowSpecs specs) : mSpecs(specs){
         window->GetSpecs().width = width;
         window->GetSpecs().height = height;
     });
+
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 }
 
 Window::~Window(){

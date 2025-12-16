@@ -8,6 +8,8 @@ private:
     VertexArray vao;
     IndexBuffer ibo;
 
+    std::unique_ptr<Texture> sample;
+
     FreeLookCamera camera;
 
     std::unique_ptr<Shader> shader;

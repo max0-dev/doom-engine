@@ -16,11 +16,9 @@ add_library(Engine STATIC
 )
 
 # Include headers
-target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/include)
-
-target_precompile_headers(Engine PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/std_common.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/extern.h
+target_include_directories(Engine PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include
+    ${Stb_INCLUDE_DIR}
 )
 
 # Find dependencies
@@ -28,6 +26,7 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(Stb REQUIRED)
 
 # Link dependencies
 target_link_libraries(Engine PUBLIC

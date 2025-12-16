@@ -1,5 +1,4 @@
 #include "include/DemoLayer.h"
-#include<spdlog/spdlog.h>
 #include<iostream>
 
 #include<Engine.h>
@@ -7,10 +6,11 @@
 DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     shader = std::make_unique<Shader>("../../../res/shaders/vert.vs", "../../../res/shaders/frag.fs");
     float vertices[] = {
-        -5, -5, 0, 1, 0, 0,
-         5, -5, 0, 0, 1, 0,
-         5,  5, 0, 0, 0, 1,
-        -5,  5, 0, 0, 0, 1
+        // positions          // colors           // texture coords
+     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
     };
 
     unsigned int indices[] = {
@@ -22,6 +22,7 @@ DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     
     vao.GetLayout().Push<float>(3);
     vao.GetLayout().Push<float>(3);
+    vao.GetLayout().Push<float>(2);
 
     vao.AddBuffer(vbo);
     auto& window = Application::sApplication->GetWindow();
@@ -29,6 +30,8 @@ DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     Scene* scene = new Scene();
     scene->SetActiveCamera(&camera);
     Renderer::Instance()->SetActiveScene(scene);
+
+    sample = std::make_unique<Texture>("../../../res/Textures/tense_cat.jpg");
 }
 
 void DemoLayer::OnUpdate(double dt){
@@ -48,6 +51,9 @@ void DemoLayer::OnRender(){
     shader->SetUniformMat4("view", view);
     shader->SetUniformMat4("proj", proj);
    
+    glActiveTexture(GL_TEXTURE0);
+    sample->Bind();
+    shader->SetUniform("texture0", 0);
     vao.Bind();
     ibo.Bind();
     glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, NULL);

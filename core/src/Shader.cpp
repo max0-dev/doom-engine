@@ -107,3 +107,7 @@ void Shader::SetUniformMat4(const char* name ,const glm::mat4& value){
     unsigned int loc = glGetUniformLocation(mHandle, name);
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
+void Shader::SetUniform(const char* name , int value){
+    unsigned int loc = glGetUniformLocation(mHandle, name);
+    glUniform1i(loc, value);
+}
