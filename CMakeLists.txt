@@ -16,7 +16,7 @@ set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_DOUBLE_PRECISION ON CACHE BOOL "" FORCE)
 
 add_subdirectory(vendor/assimp)
-add_subdirectory(vendor/imgui)
+add_subdirectory(vendor/imgui-cmake)
 
 add_subdirectory(core)
 add_subdirectory(demo)
