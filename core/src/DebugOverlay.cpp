@@ -28,6 +28,7 @@ void DebugOverlay::OnRender(){
             ImGui::EndChild();
         }
     }
+    
     End();
 }
 

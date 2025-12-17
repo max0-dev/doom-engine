@@ -32,6 +32,8 @@ DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0){
     Renderer::Instance()->SetActiveScene(scene);
 
     sample = std::make_unique<Texture>("../../../res/Textures/tense_cat.jpg");
+
+    Model girl("../../../res/models/girl/final_v01.obj");
 }
 
 void DemoLayer::OnUpdate(double dt){
