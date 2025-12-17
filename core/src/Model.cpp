@@ -35,7 +35,7 @@ Model::Model(const std::string& filepath){
         for(int vert = 0; vert < mesh->mNumVertices; vert++){
             const auto& vertex = mesh->mVertices[vert];
             const auto& normal = mesh->mNormals[vert];
-            const auto& uv = mesh->mTextureCoords[vert];
+            const auto& uv = mesh->mTextureCoords[0][vert];
 
             vertices.push_back(vertex.x);
             vertices.push_back(vertex.y);
@@ -45,8 +45,8 @@ Model::Model(const std::string& filepath){
             vertices.push_back(normal.y);
             vertices.push_back(normal.z);
 
-            vertices.push_back(uv->x);
-            vertices.push_back(uv->y);
+            vertices.push_back(uv.x);
+            vertices.push_back(uv.y);
         }
 
         for(int f = 0; f < mesh->mNumFaces; f++){
@@ -59,5 +59,5 @@ Model::Model(const std::string& filepath){
         }
     }
 
-    spdlog::info("[ASSIMP] Successfully loaded a model to memory!");
+    spdlog::info("[ASSIMP] Successfully loaded a model into memory!");
 }

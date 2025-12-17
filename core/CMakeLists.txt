@@ -39,4 +39,5 @@ target_link_libraries(Engine PUBLIC
     GLEW::GLEW
     imgui
     glm::glm
+    assimp
 )
