@@ -1,12 +1,14 @@
 #pragma once
 
-#include<Rendering/Rendering_m.h>
+#include<Rendering/VertexBuffer.h>
+#include<Rendering/IndexBuffer.h>
+#include<Rendering/VertexArray.h>
 
 class Mesh{
 private:
     VertexBuffer mVbo;
     IndexBuffer mIbo;
 public:
-    Mesh(std::vector<float> vertices, std::vector<unsigned int> indices);
+    Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices);
     void Draw(VertexArray& vao);
 };

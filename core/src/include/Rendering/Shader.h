@@ -10,4 +10,5 @@ public:
     void Use();
     void SetUniformMat4(const char* name ,const glm::mat4& value);
     void SetUniform(const char* name, int value);
+    void SetUniformVec3(const char* name, const glm::vec3& value);
 };

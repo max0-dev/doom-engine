@@ -13,6 +13,8 @@ private:
     FreeLookCamera camera;
 
     std::unique_ptr<Shader> shader;
+
+    Scene scene;
 public:
     DemoLayer();
     void OnUpdate(double dt) override;

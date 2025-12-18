@@ -23,7 +23,7 @@ void Application::Run(){
     double last_t = mWindow.GetTime();
     while (!mWindow.ShouldClose())
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         double current_t = mWindow.GetTime(); 
         double delta_t = current_t - last_t;
         last_t = current_t;

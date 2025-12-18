@@ -12,10 +12,10 @@ public:
     ~IndexBuffer(){
         glDeleteBuffers(1, &mHandle);
     }
-    void BufferData(GLsizeiptr size, const void *data, GLenum usage){
+    void BufferData(GLsizeiptr size, const void *data, GLenum usage, unsigned int count){
         Bind();
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, usage);
-        mCount = size/sizeof(unsigned int);
+        mCount = count;
     }
     void Bind() const{
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mHandle);
