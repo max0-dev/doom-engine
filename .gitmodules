@@ -7,3 +7,6 @@
 [submodule "vendor/imgui-cmake/imgui"]
 	path = vendor/imgui-cmake/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "vendor/erhe"]
+	path = vendor/erhe
+	url = https://github.com/tksuoran/erhe.git
