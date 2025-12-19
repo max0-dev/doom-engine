@@ -31,13 +31,15 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(Stb REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
 # Link dependencies
 target_link_libraries(Engine PUBLIC
     spdlog::spdlog
     glfw
     GLEW::GLEW
-    imgui
+    imgui::imgui
     glm::glm
-    assimp
+    assimp::assimp
 )

@@ -15,12 +15,8 @@ private:
     unsigned int mStride;
 public:
     VertexArrayLayout() : mStride(0) {}
-    template<typename T>
-    void Push(unsigned int count){
-        static_assert(false);
-    }
-    template<>
-    void Push<float>(unsigned int count){
+
+    void PushFloat(unsigned int count){
         mElements.push_back({GL_FLOAT, count, false});
         mStride += sizeof(float) * count;
     }

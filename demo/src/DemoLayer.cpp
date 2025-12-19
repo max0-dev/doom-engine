@@ -4,20 +4,20 @@
 #include<Engine.h>
 
 DemoLayer::DemoLayer() : camera(CameraTransform(), 120.0, 15.0), scene(){
-    shader = std::make_unique<Shader>("../../../res/shaders/vert.vs", "../../../res/shaders/frag.fs");
+    shader = std::make_unique<Shader>("../../res/shaders/vert.vs", "../../res/shaders/frag.fs");
 
-    vao.GetLayout().Push<float>(3);
-    vao.GetLayout().Push<float>(3);
-    vao.GetLayout().Push<float>(2);
+    vao.GetLayout().PushFloat(3);
+    vao.GetLayout().PushFloat(3);
+    vao.GetLayout().PushFloat(2);
 
     auto& window = Application::sApplication->GetWindow();
 
     scene.SetActiveCamera(&camera);
     Renderer::Instance()->SetActiveScene(&scene);
 
-    sample = std::make_unique<Texture>("../../../res/Textures/tense_cat.jpg");
+    //sample = std::make_unique<Texture>("../../../res/Textures/tense_cat.jpg");
 
-    scene.mModels.emplace_back("../../../res/models/girl/girl.obj");
+    scene.mModels.emplace_back("../../res/models/girl/girl.obj");
 
     Light sun{
         {0, 5, 0},
@@ -55,7 +55,7 @@ void DemoLayer::OnRender(){
     shader->SetUniformVec3("cameraPos", scene.GetActiveCamera()->GetCameraTransform().position);
 
     glActiveTexture(GL_TEXTURE0);
-    sample->Bind();
+    //sample->Bind();
     shader->SetUniform("texture0", 0);
     vao.Bind();
     scene.Render(vao);
