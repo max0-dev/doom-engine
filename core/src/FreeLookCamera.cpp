@@ -9,8 +9,8 @@ void FreeLookCamera::Look(double dt){
 
     if(glfwGetInputMode(window.GetRawPtr(), GLFW_CURSOR) == GLFW_CURSOR_NORMAL){
         first = true;
-        return;
     }
+    
     if(first){
         first = false;
         lastx = mousex;

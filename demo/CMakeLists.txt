@@ -10,6 +10,4 @@ add_executable(Demo src/main.cpp)
 target_sources(Demo PRIVATE src/DemoLayer.cpp)
 target_include_directories(Demo PRIVATE src/include)
 
-target_compile_definitions(Demo PUBLIC ASSIMP_BUILD_NO_EXPORT)
-
 target_link_libraries(Demo PRIVATE Engine)

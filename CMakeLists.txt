@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(core)
 add_subdirectory(demo)
+add_subdirectory(editor)
 
 function(set_output_dirs target)
     set_target_properties(${target} PROPERTIES
@@ -24,3 +25,4 @@ endfunction()
 
 set_output_dirs(Engine)
 set_output_dirs(Demo)
+set_output_dirs(Editor)
