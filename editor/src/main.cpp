@@ -1,7 +1,11 @@
 #include<Engine.h>
-#include<LevelEditor.h>
+#include<EditorViewport.h>
+#include<EditorOverlay.h>
+#include<EditorApplication.h>
+
 int main(){
-    Application editor_app({900, 900, "Editor", false});
-    editor_app.PushLayer<LevelEditor>();
-    editor_app.Run();
+    EditorApplication editor({900, 900, "Editor", false});
+    editor.PushLayer<EditorViewport>();
+    editor.PushLayer<EditorOverlay>();
+    editor.Run();
 }

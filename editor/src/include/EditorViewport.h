@@ -6,17 +6,19 @@
 #include<extern.h>
 #include<Rendering/Rendering_m.h>
 
-class LevelEditor : public Layer{
+class EditorViewport : public Layer{
 private:
-    std::vector<glm::vec2> mPoints;
     glm::mat4 projection;
     std::unique_ptr<Shader> mPrimitiveShader;
     VertexBuffer mVbo;
     VertexArray mVao;
     Window& mWindow;
 public:
-    LevelEditor();
+    EditorViewport();
     void OnUpdate(double dt) override;
     void OnRender() override;
     void OnEvent(Event& event);
+    void UpdateVbo(glm::vec3 p);
+
+    static EditorViewport* sEditorViewport;
 };

@@ -6,13 +6,13 @@
 #include<vector>
 
 class Application{
-private:
+protected:
     Window mWindow;
     std::vector<std::unique_ptr<Layer>> mLayerStack;
 public:
     Application(WindowSpecs window_specs);
     ~Application();
-    void Run();
+    virtual void Run();
     void Raise(Event& event);
     inline Window& GetWindow() { return mWindow; }
     static Application* sApplication;
