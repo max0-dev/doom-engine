@@ -1,5 +1,6 @@
 #include<EditorViewport.h>
 #include<EditorApplication.h>
+#include<EditorEvents.h>
 
 #include<Windowing/Application.h>
 #include<Rendering/VertexArray.h>
@@ -40,8 +41,26 @@ void EditorViewport::OnRender(){
 
 void EditorViewport::OnEvent(Event& event){
     if(EditorApplication::sEditorApplication->HasToolSelected()){
-        EditorApplication::sEditorApplication->GetActiveTool()->OnEvent(event);
+        EditorApplication::sEditorApplication->GetActiveTool()->OnEvent(event, mContext);
     }
+    EventDispatcher dispatcher(event);
+
+    dispatcher.Dispatch<OnViewportResize>([this](OnViewportResize& e){
+        std::tuple<float, float> d = e.GetDimensions();
+        float width = std::get<0>(d);
+        float height = std::get<1>(d);
+        spdlog::info("Resized viewport to x:{0}, y{1}", width, height);
+        mContext.mFrameBuffer->Resize(width, height);
+        return true;
+    });
+    dispatcher.Dispatch<OnViewportMove>([this](OnViewportMove& e){
+        glm::vec2 pos = e.GetPosition();
+
+        mContext.mViewportWidth = pos.x;
+        mContext.mViewportHeight = pos.y;
+        
+        return true;
+    });
 }
 
 void EditorViewport::UpdateVbo(glm::vec3 p){

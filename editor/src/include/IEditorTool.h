@@ -3,5 +3,5 @@
 
 class IEditorTool{
 public:
-    virtual void OnEvent(Event& event) = 0;
+    virtual void OnEvent(Event& event, ViewportContext& context) = 0;
 };

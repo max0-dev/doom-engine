@@ -4,23 +4,13 @@
 #include<functional>
 #include<sstream>
 
-#define EVENT_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
-                         virtual EventType GetEventType() const override { return GetStaticType(); }
-
-
-enum class EventType{
-    None,
-    MouseButtonDown,MouseButtonUp,MouseButtonHold,
-    KeyDown,KeyUp,KeyRepeat,
-    WindowResize
-};
 
 class Event{
 protected:
     bool mHandled = false;
 public:
     inline bool& IsHandled() { return mHandled; }
-    virtual EventType GetEventType() const = 0;
+    virtual ~Event() = default;
 };
 
 class EventDispatcher{
@@ -29,10 +19,12 @@ private:
 public:
     EventDispatcher(Event& event) : mEvent(event) {}
     template<typename T>
+    requires(std::is_base_of_v<Event, T>)
     void Dispatch(std::function<bool(T&)> func){
-        if(mEvent.GetEventType() == T::GetStaticType() && !mEvent.IsHandled() ){
+        auto* derived_e = dynamic_cast<T*>(&mEvent);
+        if(derived_e != nullptr && !mEvent.IsHandled()){
             bool& handled = mEvent.IsHandled();
-            handled = func(*((T*)&mEvent));
+            handled = func(*derived_e);
         }
     }
 };
@@ -46,7 +38,6 @@ public:
         return "Mouse Button Pressed";
     }
     inline GLenum GetMouseButton() const { return mButton; }
-    EVENT_TYPE(MouseButtonDown)
 };
 
 class MouseButtonUp : public Event{
@@ -58,7 +49,6 @@ public:
         return "Mouse Button Released";
     }
     inline GLenum GetMouseButton() const { return mButton; }
-    EVENT_TYPE(MouseButtonUp)
 };
 
 class KeyDown : public Event{
@@ -70,7 +60,6 @@ public:
         return "Key Pressed";
     }
     inline GLenum GetKey() const { return mKey; }
-    EVENT_TYPE(KeyDown)
 };
 
 class KeyUp : public Event{
@@ -82,7 +71,6 @@ public:
         return "Key Released";
     }
     inline GLenum GetKey() const { return mKey; }
-    EVENT_TYPE(KeyUp)
 };
 
 class KeyRepeat : public Event{
@@ -94,7 +82,6 @@ public:
         return "Key is being held";
     }
     inline GLenum GetKey() const { return mKey; }
-    EVENT_TYPE(KeyRepeat)
 };
 
 class WindowResize : public Event{
@@ -109,5 +96,4 @@ public:
         return ss.str();
     }
     inline std::tuple<int, int> GetDimensions() const {return std::tuple<int, int>(mWidth, mHeight);}
-    EVENT_TYPE(WindowResize)
 };
