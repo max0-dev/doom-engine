@@ -6,7 +6,7 @@
 #include<extern.h>
 #include<Rendering/Rendering_m.h>
 
-#include<EditorContexts.h>
+#include<EditorContext.h>
 
 class EditorViewport : public Layer{
 private:
@@ -15,9 +15,9 @@ private:
     VertexBuffer mVbo;
     VertexArray mVao;
     Window& mWindow;
-    ViewportContext& mContext;
+    EditorContext& mContext;
 public:
-    EditorViewport(ViewportContext& context);
+    EditorViewport(EditorContext& context);
     void OnUpdate(double dt) override;
     void OnRender() override;
     void OnEvent(Event& event);

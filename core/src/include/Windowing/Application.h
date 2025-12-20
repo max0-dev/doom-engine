@@ -5,6 +5,9 @@
 #include<memory>
 #include<vector>
 
+struct Context{
+};
+
 class Application{
 protected:
     Window mWindow;

@@ -13,7 +13,7 @@
 
 EditorViewport* EditorViewport::sEditorViewport = nullptr;
 
-EditorViewport::EditorViewport(ViewportContext& context) : mWindow(Application::sApplication->GetWindow()), mContext(context) {
+EditorViewport::EditorViewport(EditorContext& context) : mWindow(Application::sApplication->GetWindow()), mContext(context) {
     sEditorViewport = this;
     mPrimitiveShader = std::make_unique<Shader>("../../res/editor/shaders/EditorPrimitives.vert", "../../res/editor/shaders/EditorPrimitives.frag");
 
@@ -35,13 +35,13 @@ void EditorViewport::OnRender(){
     glPointSize(5);
     glm::mat4 proj = glm::ortho(0.0f, (float)mWindow.GetSpecs().width, 0.0f, (float)mWindow.GetSpecs().height);
     mPrimitiveShader->SetUniformMat4("proj", proj);
-    glDrawArrays(GL_POINTS, 0, EditorApplication::sEditorApplication->GetPoints().size());
+    glDrawArrays(GL_POINTS, 0, mContext.mPoints.size());
     mContext.mFrameBuffer->Unbind();
 }
 
 void EditorViewport::OnEvent(Event& event){
-    if(EditorApplication::sEditorApplication->HasToolSelected()){
-        EditorApplication::sEditorApplication->GetActiveTool()->OnEvent(event, mContext);
+    if(mContext.HasActiveTool()){
+        mContext.mActiveTool->OnEvent(event, mContext);
     }
     EventDispatcher dispatcher(event);
 

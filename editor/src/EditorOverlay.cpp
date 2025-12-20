@@ -4,7 +4,7 @@
 #include<EditorTools.h>
 #include<EditorEvents.h>
 
-EditorOverlay::EditorOverlay(ViewportContext& viewportContext) : Overlay(), mViewportContext(viewportContext) {
+EditorOverlay::EditorOverlay(EditorContext& context) : Overlay(), mContext(context) {
 
 }
 
@@ -12,15 +12,13 @@ void EditorOverlay::OnUpdate(double dt) {
 }
 
 void EditorOverlay::OnRender(){
-    const auto& points = EditorApplication::sEditorApplication->GetPoints();
-
     Begin();
 
     ImGui::Begin("Map Editor");
     
     if(ImGui::TreeNode("Points:")){
-        for(int i = 0; i < points.size(); i++){
-            const glm::vec3& p = points[i];
+        for(int i = 0; i < mContext.mPoints.size(); i++){
+            const glm::vec3& p = mContext.mPoints[i];
             ImGui::Text("p%d: x:%f, y:%f", i, p.x, p.y);
         }
         ImGui::TreePop();
@@ -41,7 +39,7 @@ void EditorOverlay::OnRender(){
 
     if(x != lastx || y != lasty){
         OnViewportMove event(x, y);
-        EditorApplication::sApplication->Raise(event);
+        Application::sApplication->Raise(event);
     }
 
     float width = ImGui::GetContentRegionAvail().x;
@@ -49,15 +47,21 @@ void EditorOverlay::OnRender(){
 
     if(width != lastw || height != lasth){
         OnViewportResize event(width, height);
-        EditorApplication::sApplication->Raise(event);
+        Application::sApplication->Raise(event);
     }
 
     lastw = width;
     lasth = height;
 
-    unsigned int fbo = mViewportContext.mFrameBuffer->GetTexture();
+    unsigned int fbo = mContext.mFrameBuffer->GetTexture();
     ImGui::Image((ImTextureID)fbo, ImGui::GetContentRegionAvail(), ImVec2(0,1), ImVec2(1,0));
-        
+
+    
+
+    if(mContext.HasActiveTool()){
+        mContext.mActiveTool->OnRender();
+    }
+
     ImGui::End();
 
     End();
@@ -69,9 +73,12 @@ void EditorOverlay::OnEvent(Event& event){
     dispatcher.Dispatch<KeyDown>([this](KeyDown& e){ 
 
         if(e.GetKey() == GLFW_KEY_1){
-            EditorApplication::sEditorApplication->SetActiveTool<VertexTool>();
-        } else if(e.GetKey() == GLFW_KEY_ESCAPE){
-            EditorApplication::sEditorApplication->UnselectTool();
+            mContext.SetActiveTool<VertexTool>();
+        }else if(e.GetKey() == GLFW_KEY_2){
+            mContext.SetActiveTool<SelectionTool>();
+        } 
+        else if(e.GetKey() == GLFW_KEY_ESCAPE){
+            mContext.UnselectTool();
         }
 
         return true;

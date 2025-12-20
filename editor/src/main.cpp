@@ -2,11 +2,11 @@
 #include<EditorViewport.h>
 #include<EditorOverlay.h>
 #include<EditorApplication.h>
-#include<EditorContexts.h>
+#include<EditorContext.h>
 int main(){
-    ViewportContext viewportContext;
-    EditorApplication editor({900, 900, "Editor", false});
-    editor.PushLayer<EditorViewport>(viewportContext);
-    editor.PushLayer<EditorOverlay>(viewportContext);
+    EditorContext context;
+    Application editor({900, 900, "Editor", false});
+    editor.PushLayer<EditorViewport>(context);
+    editor.PushLayer<EditorOverlay>(context);
     editor.Run();
 }

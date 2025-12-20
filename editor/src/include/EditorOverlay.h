@@ -1,13 +1,13 @@
 #pragma once
 
 #include<Windowing/Overlay.h>
-#include<EditorContexts.h>
+#include<EditorContext.h>
 
 class EditorOverlay : public Overlay{
 private:
-    ViewportContext& mViewportContext;
+    EditorContext& mContext;
 public:
-    EditorOverlay(ViewportContext& viewportContext);
+    EditorOverlay(EditorContext& context);
     void OnUpdate(double dt) override;
     void OnEvent(Event& event) override;
     void OnRender() override;
