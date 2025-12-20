@@ -1,17 +1,21 @@
 #include<EditorOverlay.h>
 #include<EditorApplication.h>
-
+#include<EditorViewport.h>
 #include<EditorTools.h>
 
-EditorOverlay::EditorOverlay() : Overlay(){
+EditorOverlay::EditorOverlay(ViewportContext& viewportContext) : Overlay(), mViewportContext(viewportContext) {
 
 }
 
 void EditorOverlay::OnUpdate(double dt) {
+}
 
+void EditorOverlay::OnRender(){
     const auto& points = EditorApplication::sEditorApplication->GetPoints();
 
-    Begin("Map Info");
+    Begin();
+
+    ImGui::Begin("Map Editor");
     
     if(ImGui::TreeNode("Points:")){
         for(int i = 0; i < points.size(); i++){
@@ -21,11 +25,20 @@ void EditorOverlay::OnUpdate(double dt) {
         ImGui::TreePop();
     }
 
+    ImGui::End();
+
+    ImGui::Begin("Viewport");
+
+    float width = ImGui::GetContentRegionAvail().x;
+    float height = ImGui::GetContentRegionAvail().y;
+
+    unsigned int fbo = mViewportContext.mFrameBuffer->GetTexture();
+    mViewportContext.mFrameBuffer->Resize(width, height);
+    ImGui::Image((ImTextureID)fbo, ImGui::GetContentRegionAvail(), ImVec2(0,1), ImVec2(1,0));
+
+    ImGui::End();
+
     End();
-}
-
-void EditorOverlay::OnRender(){
-
 }
 
 void EditorOverlay::OnEvent(Event& event){

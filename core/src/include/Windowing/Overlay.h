@@ -10,6 +10,6 @@ public:
     virtual void OnRender() {}
     virtual void OnEvent(Event& event) {}
 
-    void Begin(const char* title);
+    void Begin();
     void End();
 };

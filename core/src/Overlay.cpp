@@ -23,7 +23,7 @@ Overlay::~Overlay(){
     ImGui::DestroyContext();
 }
 
-void Overlay::Begin(const char* title){
+void Overlay::Begin(){
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -48,13 +48,9 @@ void Overlay::Begin(const char* title){
     }
 
     ImGui::DockSpaceOverViewport(dockspace_id, viewport, ImGuiDockNodeFlags_PassthruCentralNode);
-
-    ImGui::Begin(title);
 }
 
 void Overlay::End(){
-    ImGui::End();
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

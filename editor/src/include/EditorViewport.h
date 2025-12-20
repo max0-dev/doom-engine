@@ -6,6 +6,8 @@
 #include<extern.h>
 #include<Rendering/Rendering_m.h>
 
+#include<EditorContexts.h>
+
 class EditorViewport : public Layer{
 private:
     glm::mat4 projection;
@@ -13,12 +15,14 @@ private:
     VertexBuffer mVbo;
     VertexArray mVao;
     Window& mWindow;
+    ViewportContext& mContext;
 public:
-    EditorViewport();
+    EditorViewport(ViewportContext& context);
     void OnUpdate(double dt) override;
     void OnRender() override;
     void OnEvent(Event& event);
     void UpdateVbo(glm::vec3 p);
+    inline std::tuple<float, float> GetViewportSize() { return std::tuple<float, float>(mContext.mViewportWidth, mContext.mViewportHeight); }
 
     static EditorViewport* sEditorViewport;
 };

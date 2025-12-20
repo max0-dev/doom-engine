@@ -12,7 +12,7 @@
 
 EditorViewport* EditorViewport::sEditorViewport = nullptr;
 
-EditorViewport::EditorViewport() : mWindow(Application::sApplication->GetWindow()) {
+EditorViewport::EditorViewport(ViewportContext& context) : mWindow(Application::sApplication->GetWindow()), mContext(context) {
     sEditorViewport = this;
     mPrimitiveShader = std::make_unique<Shader>("../../res/editor/shaders/EditorPrimitives.vert", "../../res/editor/shaders/EditorPrimitives.frag");
 
@@ -20,6 +20,7 @@ EditorViewport::EditorViewport() : mWindow(Application::sApplication->GetWindow(
     layout.PushFloat(3);
 
     mVbo.BufferData(VBO_CAPACITY, nullptr, GL_DYNAMIC_DRAW);
+    mContext.mFrameBuffer = std::make_unique<FrameBuffer>(mWindow.GetSpecs().width, mWindow.GetSpecs().height);
 }
 
 void EditorViewport::OnUpdate(double dt){
@@ -27,12 +28,14 @@ void EditorViewport::OnUpdate(double dt){
 }
 
 void EditorViewport::OnRender(){
+    mContext.mFrameBuffer->Bind();
     mPrimitiveShader->Use();
     mVao.AddBuffer(mVbo);
     glPointSize(5);
     glm::mat4 proj = glm::ortho(0.0f, (float)mWindow.GetSpecs().width, 0.0f, (float)mWindow.GetSpecs().height);
     mPrimitiveShader->SetUniformMat4("proj", proj);
     glDrawArrays(GL_POINTS, 0, EditorApplication::sEditorApplication->GetPoints().size());
+    mContext.mFrameBuffer->Unbind();
 }
 
 void EditorViewport::OnEvent(Event& event){

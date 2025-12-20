@@ -2,8 +2,11 @@
 
 #include<Windowing/Application.h>
 #include<extern.h>
+#include<Rendering/FrameBuffer.h>
+#include<EditorContexts.h>
 
 #include<IEditorTool.h>
+
 
 class EditorApplication : public Application{
 private:

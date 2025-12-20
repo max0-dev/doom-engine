@@ -6,7 +6,9 @@
 #include<Scene/Camera.h>
 
 void DebugOverlay::OnRender(){
-    Begin("Debug");
+    Begin();
+
+    ImGui::Begin("Debug Window");
 
     ImGui::BeginChild("Performance", ImVec2(400, 50));
     
@@ -29,6 +31,8 @@ void DebugOverlay::OnRender(){
         }
     }
     
+    ImGui::End();
+
     End();
 }
 
