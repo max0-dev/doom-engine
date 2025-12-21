@@ -1,10 +1,11 @@
 #pragma once
 #include<Event.h>
-#include<EditorContext.h>
-#include<Windowing/Application.h>
+
+class EditorContext;
 
 class IEditorTool{
 public:
+    virtual ~IEditorTool() = default;
     virtual void OnEvent(Event& event, EditorContext& context) {}
-    virtual void OnRender() {}
+    virtual void OnRender(EditorContext& context) {}
 };

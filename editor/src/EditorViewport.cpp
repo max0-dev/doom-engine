@@ -19,8 +19,9 @@ EditorViewport::EditorViewport(EditorContext& context) : mWindow(Application::sA
 
     VertexArrayLayout& layout = mVao.GetLayout();
     layout.PushFloat(3);
+    layout.PushFloat(1);
 
-    mVbo.BufferData(VBO_CAPACITY, nullptr, GL_DYNAMIC_DRAW);
+    //mVbo.BufferData(VBO_CAPACITY, nullptr, GL_DYNAMIC_DRAW);
     mContext.mFrameBuffer = std::make_unique<FrameBuffer>(mWindow.GetSpecs().width, mWindow.GetSpecs().height);
 }
 
@@ -32,7 +33,7 @@ void EditorViewport::OnRender(){
     mContext.mFrameBuffer->Bind();
     mPrimitiveShader->Use();
     mVao.AddBuffer(mVbo);
-    glPointSize(5);
+    glPointSize(10);
     glm::mat4 proj = glm::ortho(0.0f, (float)mWindow.GetSpecs().width, 0.0f, (float)mWindow.GetSpecs().height);
     mPrimitiveShader->SetUniformMat4("proj", proj);
     glDrawArrays(GL_POINTS, 0, mContext.mPoints.size());
@@ -61,8 +62,18 @@ void EditorViewport::OnEvent(Event& event){
         
         return true;
     });
+    dispatcher.Dispatch<OnPointAdded>([this](OnPointAdded& e){
+        glm::vec3 p = e.GetPoint();
+        mContext.mPoints.emplace_back(p, 0);
+        mVbo.BufferData(mContext.mPoints.size() * sizeof(Point), mContext.mPoints.data(), GL_DYNAMIC_DRAW);
+        return true;
+    });
+    dispatcher.Dispatch<OnSelected>([this](OnSelected& e){
+        mVbo.BufferData(mContext.mPoints.size() * sizeof(Point), mContext.mPoints.data(), GL_DYNAMIC_DRAW);
+        return true;
+    });
 }
 
 void EditorViewport::UpdateVbo(glm::vec3 p){
-    mVbo.BufferSubData(mVbo.GetWriteOffset(), sizeof(float) * 3, glm::value_ptr(p));
+    //mVbo.BufferSubData(mVbo.GetWriteOffset(), sizeof(float) * 3, glm::value_ptr(p));
 }

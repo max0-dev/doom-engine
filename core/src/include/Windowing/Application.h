@@ -6,6 +6,7 @@
 #include<vector>
 
 struct Context{
+    virtual ~Context() = default;
 };
 
 class Application{

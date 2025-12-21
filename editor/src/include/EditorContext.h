@@ -4,9 +4,11 @@
 #include<std_common.h>
 #include<Windowing/Application.h>
 #include<IEditorTool.h>
+#include<MapPrimitives.h>
 
-struct EditorContext : public Context{
-    std::vector<glm::vec3> mPoints;
+struct EditorContext{
+    std::vector<Point> mPoints;
+    std::vector<glm::vec3> mSelectedPoints;
     std::unique_ptr<IEditorTool> mActiveTool = nullptr;
     std::unique_ptr<FrameBuffer> mFrameBuffer;
     float mViewportWidth;

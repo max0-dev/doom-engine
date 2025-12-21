@@ -18,8 +18,8 @@ void EditorOverlay::OnRender(){
     
     if(ImGui::TreeNode("Points:")){
         for(int i = 0; i < mContext.mPoints.size(); i++){
-            const glm::vec3& p = mContext.mPoints[i];
-            ImGui::Text("p%d: x:%f, y:%f", i, p.x, p.y);
+            const Point& p = mContext.mPoints[i];
+            ImGui::Text("p%d: x:%f, y:%f", i, p.position.x, p.position.y);
         }
         ImGui::TreePop();
     }
@@ -59,7 +59,7 @@ void EditorOverlay::OnRender(){
     
 
     if(mContext.HasActiveTool()){
-        mContext.mActiveTool->OnRender();
+        mContext.mActiveTool->OnRender(mContext);
     }
 
     ImGui::End();
